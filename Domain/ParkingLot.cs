@@ -5,8 +5,6 @@ namespace e_parking_garage.Domain
 {
     public class ParkingLot : CoreObject
     {
-        public const double HourlyRate = 100;
-
         public List<ParkingSlot> ParkingSlots { get; private set; }
         public List<ParkingCard> ParkingCards { get; private set; }
         public SlotAvaliabilityStatus Status { get; private set; }

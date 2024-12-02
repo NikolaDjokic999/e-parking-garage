@@ -1,6 +1,8 @@
 ﻿using e_parking_garage.Domain;
 using e_parking_garage.Enums;
-using e_parking_garage.NewFolder;
+using e_parking_garage.Interfaces;
+using e_parking_garage.Managers;
+using e_parking_garage.Policies;
 
 namespace e_parking_garage.Services
 {
@@ -10,6 +12,7 @@ namespace e_parking_garage.Services
         private static List<ParkingSlot> _ParkingSlots = new();
         private static ParkingLot _ParkingLot;
         private static Dictionary<long, ParkingSlot> _OccupiedSlots = new();
+        private static IPricingPolicy _pricingPolicy = new ParkingLotPolicy(100);
 
         static ParkingService()
         {
@@ -68,7 +71,7 @@ namespace e_parking_garage.Services
 
             var parkingDuration = DateTime.Now - parkingCard.EntryTime;
             
-            return Math.Ceiling(parkingDuration.TotalHours) * ParkingLot.HourlyRate;
+            return _pricingPolicy.CalculateCost(parkingDuration);
         }
 
         public static ParkingCard SearchParkingCardById(long id)

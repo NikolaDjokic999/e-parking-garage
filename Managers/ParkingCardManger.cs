@@ -1,6 +1,6 @@
 ﻿using e_parking_garage.Domain;
 
-namespace e_parking_garage.NewFolder
+namespace e_parking_garage.Managers
 {
     public static class ParkingCardManager
     {
