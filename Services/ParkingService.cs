@@ -12,16 +12,18 @@ namespace e_parking_garage.Services
         private static List<ParkingSlot> _ParkingSlots = new();
         private static ParkingLot _ParkingLot;
         private static Dictionary<long, ParkingSlot> _OccupiedSlots = new();
-        private static IPricingPolicy _pricingPolicy = new ParkingLotPolicy(100);
+        private static IPricingPolicy _PricingPolicy;
 
         static ParkingService()
         {
             var parkingSlots = new List<ParkingSlot>();
+            
             for (int x = 1; x <= 10; x++)
             {
                 parkingSlots.Add(ParkingSlot.Create(x));
             }
 
+            _PricingPolicy = new ParkingLotPolicy(100);
             _ParkingLot = ParkingLot.Create(parkingSlots, SlotAvaliabilityStatus.Free);
         }
 
@@ -71,7 +73,7 @@ namespace e_parking_garage.Services
 
             var parkingDuration = DateTime.Now - parkingCard.EntryTime;
             
-            return _pricingPolicy.CalculateCost(parkingDuration);
+            return _PricingPolicy.CalculateCost(parkingDuration);
         }
 
         public static ParkingCard SearchParkingCardById(long id)
