@@ -16,15 +16,18 @@ class Program
                     HandleEnterVehicle();
                     break;
                 case "2":
-                    HandleSearchParkingCard();
+                    HandleSearchParkingCardById();
                     break;
                 case "3":
-                    HandleCalculatePrice();
+                    HandleSearchParkingCardByBarcode();
                     break;
                 case "4":
-                    HandleExitVehicle();
+                    HandleCalculatePrice();
                     break;
                 case "5":
+                    HandleExitVehicle();
+                    break;
+                case "6":
                     Console.WriteLine("Exiting application...");
                     return;
                 default:
@@ -38,10 +41,11 @@ class Program
     {
         Console.WriteLine("\nChoose an option:");
         Console.WriteLine("1. Enter Vehicle to Parking Lot");
-        Console.WriteLine("2. Search Parking Card");
-        Console.WriteLine("3. Calculate the Price");
-        Console.WriteLine("4. Exit Vehicle from Parking Lot");
-        Console.WriteLine("5. Exit Application");
+        Console.WriteLine("2. Search Parking Card by Id");
+        Console.WriteLine("3. Search Parking Card by Barcode");
+        Console.WriteLine("4. Calculate the Price");
+        Console.WriteLine("5. Exit Vehicle from Parking Lot");
+        Console.WriteLine("6. Exit Application");
         Console.Write("Your option: ");
     }
 
@@ -57,7 +61,7 @@ class Program
         }
     }
 
-    static void HandleSearchParkingCard()
+    static void HandleSearchParkingCardById()
     {
         Console.Write("Enter the ID of the Parking Card: ");
         try
@@ -73,6 +77,21 @@ class Program
         catch (FormatException ex)
         {
             Console.WriteLine("Invalid Format:" + ex.Message);
+        }
+    }
+
+    static void HandleSearchParkingCardByBarcode()
+    {
+        Console.Write("Enter the Barcode of the Parking Card: ");
+        try
+        {
+            var input = Console.ReadLine();
+
+            ParkingService.SearchParkingCardByBarcode(input);
+        }
+        catch (InvalidOperationException ex)
+        {
+            Console.WriteLine("Invalid Opertaion:" + ex.Message);
         }
     }
 

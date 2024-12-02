@@ -15,5 +15,8 @@ namespace e_parking_garage.Domain
 
         public static ParkingCard Create(string barcode, DateTime entryTime)
             => new ParkingCard(barcode, entryTime);
+
+        public static string GenerateBarcode()
+            => Guid.NewGuid().ToString().Substring(0, 8).ToUpper();
     }
 }

@@ -37,7 +37,7 @@ namespace e_parking_garage.Services
             ParkingSlotManager.MarkSlotAsOccupied(availableSlot);
             _OccupiedSlots[parkingCard.Id] = availableSlot;
 
-            Console.WriteLine($"Vehicle successfully registered. Your card id is: {parkingCard.Id}, Parking Slot: {availableSlot.SlotNumber}");
+            Console.WriteLine($"Vehicle successfully registered. Your card id is: {parkingCard.Id}, Parking Slot: {availableSlot.SlotNumber} BARCODE: {parkingCard.Barcode}");
             return;
         }
 
@@ -76,9 +76,21 @@ namespace e_parking_garage.Services
             var card = _ParkingLot.ParkingCards.SingleOrDefault(card => card.Id == id);
 
             if (card is null)
-                throw new InvalidOperationException("Card not found.");
+                throw new InvalidOperationException("Card not found with given id.");
             else
-                Console.WriteLine($"Card found! ID: {card.Id}, Entry Time: {card.EntryTime}");
+                Console.WriteLine($"Card found! ID: {card.Id}, Entry Time: {card.EntryTime}, Barcode: {card.Barcode}");
+
+            return card;
+        }
+
+        public static ParkingCard SearchParkingCardByBarcode(string barcode)
+        {
+            var card = _ParkingLot.ParkingCards.SingleOrDefault(card => card.Barcode == barcode);
+
+            if (card is null)
+                throw new InvalidOperationException($"No card found with barcode: {barcode}");
+            else
+                Console.WriteLine($"Card found! ID: {card.Id}, Entry Time: {card.EntryTime}, Barcode: {card.Barcode}");
 
             return card;
         }
